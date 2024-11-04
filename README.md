@@ -18,6 +18,12 @@ Run battleship with composer
 composer run game
 ```
 
+or with docker:
+
+```bash
+docker-composer run app
+```
+
 ## Execute tests with composer
 
 Install dependencies

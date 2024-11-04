@@ -1,0 +1,8 @@
+services:
+  app:
+    image: composer
+    restart: unless-stopped
+    volumes:
+      - ./:/battleship
+    working_dir: /battleship
+    command: 'run game'
