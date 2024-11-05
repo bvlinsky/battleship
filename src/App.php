@@ -124,7 +124,7 @@ class App
             $position = readline("");
 
             [$isHit, $ship] = GameController::checkIsHit(self::$enemyFleet, self::parsePosition($position));
-            if ($ship->isSunk()) {
+            if ($isHit && $ship->isSunk()) {
                 self::beep();
                 self::$console->println("You sank a {$ship->getName()}!");
                 self::$console->println("Ships left: " . implode(
@@ -159,11 +159,10 @@ class App
                 self::$console->println("Miss");
             }
 
-            
             self::$console->println();
 
             $position = self::getRandomPosition();
-            $isHit = GameController::checkIsHit(self::$myFleet, $position);
+            [$isHit, $ship] = GameController::checkIsHit(self::$myFleet, $position);
             self::$console->println();
             printf("Computer shoot in %s%s and %s", $position->getColumn(), $position->getRow(), $isHit ? "hit your ship !\n" : "miss");
             if ($isHit) {
