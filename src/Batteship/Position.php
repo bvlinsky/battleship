@@ -9,6 +9,7 @@ class Position
      */
     private $column;
     private $row;
+    private $isHit = false;
 
     /**
      * Position constructor.
@@ -29,6 +30,16 @@ class Position
     public function getRow()
     {
         return $this->row;
+    }
+
+    public function getIsHit()
+    {
+        return $this->isHit;
+    }
+
+    public function setIsHit($isHit)
+    {
+        $this->isHit = (bool) $isHit;
     }
 
     public function __toString()

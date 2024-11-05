@@ -7,8 +7,8 @@ use Battleship\Color;
 
 class App
 {
-    private static $myFleet = array();
-    private static $enemyFleet = array();
+    private static $myFleet = [];
+    private static $enemyFleet = [];
     private static $console;
 
     static function run()
@@ -77,19 +77,41 @@ class App
     {
         self::$myFleet = GameController::initializeShips();
 
-        self::$console->println("Please position your fleet (Game board has size from A to H and 1 to 8) :");
+        // self::$console->println("Please position your fleet (Game board has size from A to H and 1 to 8) :");
 
-        foreach (self::$myFleet as $ship) {
+        // foreach (self::$myFleet as $ship) {
 
-            self::$console->println();
-            printf("Please enter the positions for the %s (size: %s)", $ship->getName(), $ship->getSize());
+        //     self::$console->println();
+        //     printf("Please enter the positions for the %s (size: %s)", $ship->getName(), $ship->getSize());
 
-            for ($i = 1; $i <= $ship->getSize(); $i++) {
-                printf("\nEnter position %s of %s (i.e A3):", $i, $ship->getSize());
-                $input = readline("");
-                $ship->addPosition($input);
-            }
-        }
+        //     for ($i = 1; $i <= $ship->getSize(); $i++) {
+        //         printf("\nEnter position %s of %s (i.e A3):", $i, $ship->getSize());
+        //         $input = readline("");
+        //         $ship->addPosition($input);
+        //     }
+        // }
+
+        array_push(self::$myFleet[0]->getPositions(), new Position('B', 4));
+        array_push(self::$myFleet[0]->getPositions(), new Position('B', 5));
+        array_push(self::$myFleet[0]->getPositions(), new Position('B', 6));
+        array_push(self::$myFleet[0]->getPositions(), new Position('B', 7));
+        array_push(self::$myFleet[0]->getPositions(), new Position('B', 8));
+
+        array_push(self::$myFleet[1]->getPositions(), new Position('E', 6));
+        array_push(self::$myFleet[1]->getPositions(), new Position('E', 7));
+        array_push(self::$myFleet[1]->getPositions(), new Position('E', 8));
+        array_push(self::$myFleet[1]->getPositions(), new Position('E', 9));
+
+        array_push(self::$myFleet[2]->getPositions(), new Position('A', 3));
+        array_push(self::$myFleet[2]->getPositions(), new Position('B', 3));
+        array_push(self::$myFleet[2]->getPositions(), new Position('C', 3));
+
+        array_push(self::$myFleet[3]->getPositions(), new Position('F', 8));
+        array_push(self::$myFleet[3]->getPositions(), new Position('G', 8));
+        array_push(self::$myFleet[3]->getPositions(), new Position('H', 8));
+
+        array_push(self::$myFleet[4]->getPositions(), new Position('C', 5));
+        array_push(self::$myFleet[4]->getPositions(), new Position('C', 6));
     }
 
     public static function beep()
@@ -123,9 +145,30 @@ class App
             self::$console->println("Enter coordinates for your shot :");
             $position = readline("");
 
-            $isHit = GameController::checkIsHit(self::$enemyFleet, self::parsePosition($position));
-            if ($isHit) {
+            [$isHit, $ship] = GameController::checkIsHit(self::$enemyFleet, self::parsePosition($position));
+            if ($ship->isSunk()) {
                 self::beep();
+                self::$console->println("You sank a {$ship->getName()}!");
+                self::$console->println("Ships left: " . implode(
+                    ', ',
+                    array_map(function ($ship) { return $ship->getName(); }, GameController::getShipsLeft(self::$enemyFleet)),
+                ));
+                self::$console->println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣄⠈⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⣴⣄⠀⢀⣤⣶⣦⣀⠀⠀⣰⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⢸⣿⣷⣌⠻⢿⣩⡿⢷⣄⠙⢿⠟⠀⠀⠀⠀⠀⠰⣄⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⠈⣿⣿⣿⣷⣄⠙⢷⣾⠟⣷⣄⠀⠀⠀⠀⣠⣿⣦⠈⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⠀⢿⣿⣿⣿⣿⣷⣄⠙⢿⣏⣹⣷⣄⠀⢴⣿⣿⠃⠀⠀⠀⠀⢀⡀⠀⠀");
+                self::$console->println("⠀⠀⠀⠸⣦⡙⠻⣿⣿⣿⣿⣷⣄⠙⢿⣤⡿⢷⣄⠙⠃⠀⠀⠀⠀⣀⡈⠻⠂⠀");
+                self::$console->println("⠀⠀⠀⠀⠈⠻⣦⡈⠻⣿⣿⣿⣿⣷⣄⠙⢷⣾⠛⣷⣄⠀⠀⢀⣴⣿⣿⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⠀⠀⠀⠈⠻⣦⡈⠛⠛⠻⣿⣿⣷⣄⠙⠛⠋⢹⣷⣄⠈⠻⠛⠃⠀⠀⠀");
+                self::$console->println("⠀⢀⣴⣿⣧⡀⠀⠀⠈⢁⣼⣿⣄⠙⢿⡿⠋⣠⣿⣧⡀⠠⡿⠗⢀⣼⣿⣦⡀⠀");
+                self::$console->println("⠀⠟⠛⠉⠙⠻⣶⣤⣶⠟⠋⠉⠛⢷⣦⣴⡾⠛⠉⠙⠻⣶⣤⣶⠟⠋⠉⠛⠻⠀");
+                self::$console->println("⠀⣶⣿⣿⣿⣦⣄⣉⣠⣶⣿⣿⣷⣦⣈⣁⣴⣾⣿⣿⣶⣄⣉⣠⣶⣿⣿⣿⣶⠀");
+                self::$console->println("⠀⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠀");
+            } elseif ($isHit) {
+                self::beep();
+                self::$console->println("Yeah ! Nice hit !");
                 self::$console->println("                \\         .  ./");
                 self::$console->println("              \\      .:\" \";'.:..\" \"   /");
                 self::$console->println("                  (M^^.^~~:.'\" \").");
@@ -134,9 +177,11 @@ class App
                 self::$console->println("            -   (\\- |  \\ /  |  /)  -");
                 self::$console->println("                 -\\  \\     /  /-");
                 self::$console->println("                   \\  \\   /  /");
+            } else {
+                self::$console->println("Miss");
             }
 
-            echo $isHit ? "Yeah ! Nice hit !" : "Miss";
+            
             self::$console->println();
 
             $position = self::getRandomPosition();
