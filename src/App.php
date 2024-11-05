@@ -125,12 +125,9 @@ class App
 
             [$isHit, $ship] = GameController::checkIsHit(self::$enemyFleet, self::parsePosition($position));
             if ($isHit && $ship->isSunk()) {
+                $ships = GameController::getShipsLeft(self::$enemyFleet);
                 self::beep();
                 self::$console->println("You sank a {$ship->getName()}!");
-                self::$console->println("Ships left: " . implode(
-                    ', ',
-                    array_map(function ($ship) { return $ship->getName(); }, GameController::getShipsLeft(self::$enemyFleet)),
-                ));
                 self::$console->println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
                 self::$console->println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣄⠈⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
                 self::$console->println("⠀⠀⠀⣴⣄⠀⢀⣤⣶⣦⣀⠀⠀⣰⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
@@ -144,6 +141,16 @@ class App
                 self::$console->println("⠀⠟⠛⠉⠙⠻⣶⣤⣶⠟⠋⠉⠛⢷⣦⣴⡾⠛⠉⠙⠻⣶⣤⣶⠟⠋⠉⠛⠻⠀");
                 self::$console->println("⠀⣶⣿⣿⣿⣦⣄⣉⣠⣶⣿⣿⣷⣦⣈⣁⣴⣾⣿⣿⣶⣄⣉⣠⣶⣿⣿⣿⣶⠀");
                 self::$console->println("⠀⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠀");
+
+                if (count($ships)) {
+                    self::$console->println("Ships left: " . implode(
+                        ', ',
+                        array_map(function ($ship) { return $ship->getName(); }, $ships),
+                    ));
+                } else {
+                    self::$console->println("You are the winner!");
+                    exit();
+                }
             } elseif ($isHit) {
                 self::beep();
                 self::$console->println("Yeah ! Nice hit !");
@@ -165,7 +172,33 @@ class App
             [$isHit, $ship] = GameController::checkIsHit(self::$myFleet, $position);
             self::$console->println();
             printf("Computer shoot in %s%s and %s", $position->getColumn(), $position->getRow(), $isHit ? "hit your ship !\n" : "miss");
-            if ($isHit) {
+            if ($isHit && $ship->isSunk()) {
+                $ships = GameController::getShipsLeft(self::$enemyFleet);
+                self::beep();
+                self::$console->println("Computer sank a {$ship->getName()}!");
+                self::$console->println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣄⠈⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⣴⣄⠀⢀⣤⣶⣦⣀⠀⠀⣰⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⢸⣿⣷⣌⠻⢿⣩⡿⢷⣄⠙⢿⠟⠀⠀⠀⠀⠀⠰⣄⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⠈⣿⣿⣿⣷⣄⠙⢷⣾⠟⣷⣄⠀⠀⠀⠀⣠⣿⣦⠈⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⠀⢿⣿⣿⣿⣿⣷⣄⠙⢿⣏⣹⣷⣄⠀⢴⣿⣿⠃⠀⠀⠀⠀⢀⡀⠀⠀");
+                self::$console->println("⠀⠀⠀⠸⣦⡙⠻⣿⣿⣿⣿⣷⣄⠙⢿⣤⡿⢷⣄⠙⠃⠀⠀⠀⠀⣀⡈⠻⠂⠀");
+                self::$console->println("⠀⠀⠀⠀⠈⠻⣦⡈⠻⣿⣿⣿⣿⣷⣄⠙⢷⣾⠛⣷⣄⠀⠀⢀⣴⣿⣿⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⠀⠀⠀⠈⠻⣦⡈⠛⠛⠻⣿⣿⣷⣄⠙⠛⠋⢹⣷⣄⠈⠻⠛⠃⠀⠀⠀");
+                self::$console->println("⠀⢀⣴⣿⣧⡀⠀⠀⠈⢁⣼⣿⣄⠙⢿⡿⠋⣠⣿⣧⡀⠠⡿⠗⢀⣼⣿⣦⡀⠀");
+                self::$console->println("⠀⠟⠛⠉⠙⠻⣶⣤⣶⠟⠋⠉⠛⢷⣦⣴⡾⠛⠉⠙⠻⣶⣤⣶⠟⠋⠉⠛⠻⠀");
+                self::$console->println("⠀⣶⣿⣿⣿⣦⣄⣉⣠⣶⣿⣿⣷⣦⣈⣁⣴⣾⣿⣿⣶⣄⣉⣠⣶⣿⣿⣿⣶⠀");
+                self::$console->println("⠀⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠀");
+                if (count($ships)) {
+                    self::$console->println("Ships left: " . implode(
+                        ', ',
+                        array_map(function ($ship) { return $ship->getName(); }, $ships),
+                    ));
+                } else {
+                    self::$console->println("You lost!");
+                    exit();
+                }
+            } elseif ($isHit) {
                 self::beep();
 
                 self::$console->println("                \\         .  ./");
