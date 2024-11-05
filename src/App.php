@@ -7,8 +7,8 @@ use Battleship\Color;
 
 class App
 {
-    private static $myFleet = array();
-    private static $enemyFleet = array();
+    private static $myFleet = [];
+    private static $enemyFleet = [];
     private static $console;
 
     static function run()
@@ -128,12 +128,37 @@ class App
             self::$console->println("Enter coordinates for your shot :");
             $position = readline("");
 
-            $isHit = GameController::checkIsHit(self::$enemyFleet, self::parsePosition($position));
-            if ($isHit) {
+            [$isHit, $ship] = GameController::checkIsHit(self::$enemyFleet, self::parsePosition($position));
+
+            if ($isHit && $ship->isSunk()) {
                 self::beep();
 
                 self::$console->setForegroundColor(Color::ORANGE);
 
+                self::$console->println("You sank a {$ship->getName()}!");
+                self::$console->println("Ships left: " . implode(
+                    ', ',
+                    array_map(function ($ship) { return $ship->getName(); }, GameController::getShipsLeft(self::$enemyFleet)),
+                ));
+                self::$console->println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣄⠈⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⣴⣄⠀⢀⣤⣶⣦⣀⠀⠀⣰⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⢸⣿⣷⣌⠻⢿⣩⡿⢷⣄⠙⢿⠟⠀⠀⠀⠀⠀⠰⣄⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⠈⣿⣿⣿⣷⣄⠙⢷⣾⠟⣷⣄⠀⠀⠀⠀⣠⣿⣦⠈⠀⠀⠀⠀⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⠀⢿⣿⣿⣿⣿⣷⣄⠙⢿⣏⣹⣷⣄⠀⢴⣿⣿⠃⠀⠀⠀⠀⢀⡀⠀⠀");
+                self::$console->println("⠀⠀⠀⠸⣦⡙⠻⣿⣿⣿⣿⣷⣄⠙⢿⣤⡿⢷⣄⠙⠃⠀⠀⠀⠀⣀⡈⠻⠂⠀");
+                self::$console->println("⠀⠀⠀⠀⠈⠻⣦⡈⠻⣿⣿⣿⣿⣷⣄⠙⢷⣾⠛⣷⣄⠀⠀⢀⣴⣿⣿⠀⠀⠀");
+                self::$console->println("⠀⠀⠀⠀⠀⠀⠈⠻⣦⡈⠛⠛⠻⣿⣿⣷⣄⠙⠛⠋⢹⣷⣄⠈⠻⠛⠃⠀⠀⠀");
+                self::$console->println("⠀⢀⣴⣿⣧⡀⠀⠀⠈⢁⣼⣿⣄⠙⢿⡿⠋⣠⣿⣧⡀⠠⡿⠗⢀⣼⣿⣦⡀⠀");
+                self::$console->println("⠀⠟⠛⠉⠙⠻⣶⣤⣶⠟⠋⠉⠛⢷⣦⣴⡾⠛⠉⠙⠻⣶⣤⣶⠟⠋⠉⠛⠻⠀");
+                self::$console->println("⠀⣶⣿⣿⣿⣦⣄⣉⣠⣶⣿⣿⣷⣦⣈⣁⣴⣾⣿⣿⣶⣄⣉⣠⣶⣿⣿⣿⣶⠀");
+                self::$console->println("⠀⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠛⠀");
+            } elseif ($isHit) {
+                self::beep();
+
+                self::$console->setForegroundColor(Color::ORANGE);
+
+                self::$console->println("Yeah ! Nice hit !");
                 self::$console->println("                \\         .  ./");
                 self::$console->println("              \\      .:\" \";'.:..\" \"   /");
                 self::$console->println("                  (M^^.^~~:.'\" \").");
@@ -142,18 +167,16 @@ class App
                 self::$console->println("            -   (\\- |  \\ /  |  /)  -");
                 self::$console->println("                 -\\  \\     /  /-");
                 self::$console->println("                   \\  \\   /  /");
-                self::$console->println("Yeah ! Nice hit !");
             } else {
                 self::$console->setForegroundColor(Color::CADET_BLUE);
                 self::$console->println("Miss");
             }
 
             self::$console->resetForegroundColor();
-            self::printGameStepBoundary();
+            self::$console->println();
 
             $position = self::getRandomPosition();
             $isHit = GameController::checkIsHit(self::$myFleet, $position);
-
             self::$console->println();
             printf("Computer shoot in %s%s", $position->getColumn(), $position->getRow());
 

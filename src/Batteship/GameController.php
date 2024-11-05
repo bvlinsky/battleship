@@ -20,12 +20,21 @@ class GameController
         foreach ($fleet as $ship) {
             foreach ($ship->getPositions() as $position) {
                 if ($position == $shot) {
-                    return true;
+                    $position->setIsHit(true);
+
+                    return [true, $ship];
                 }
             }
         }
 
-        return false;
+        return [false, null];
+    }
+
+    public static function getShipsLeft(array $fleet)
+    {
+        return array_filter($fleet, function ($ship) {
+            return !$ship->isSunk();
+        });
     }
 
     public static function initializeShips()
@@ -35,7 +44,8 @@ class GameController
             new Ship("Battleship", 4, Color::RED),
             new Ship("Submarine", 3, Color::CHARTREUSE),
             new Ship("Destroyer", 3, Color::YELLOW),
-            new Ship("Patrol Boat", 2, Color::ORANGE));
+            new Ship("Patrol Boat", 2, Color::ORANGE),
+        );
     }
 
     public static function isShipValid($ship)

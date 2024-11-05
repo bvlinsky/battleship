@@ -59,4 +59,14 @@ class Ship
         $this->size = $size;
     }
 
+    public function isSunk()
+    {
+        foreach ($this->positions as $position) {
+            if (!$position->getIsHit()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
