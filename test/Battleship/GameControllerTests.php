@@ -26,7 +26,7 @@ final class GameControllerTests extends TestCase
             $counter++;
         }
 
-        $result = GameController::checkIsHit($ships, new Position('A', 1));
+        [$result, $ship] = GameController::checkIsHit($ships, new Position('A', 1));
 
         $this->assertTrue($result);
     }
@@ -46,7 +46,7 @@ final class GameControllerTests extends TestCase
             $counter++;
         }
 
-        $result = GameController::checkIsHit($ships, new Position('H', 1));
+        [$result, $ship] = GameController::checkIsHit($ships, new Position('H', 1));
 
         $this->assertFalse($result);
     }
