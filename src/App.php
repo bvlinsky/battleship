@@ -183,7 +183,7 @@ class App
             self::$console->println();
 
             $position = self::getRandomPosition();
-            $isHit = GameController::checkIsHit(self::$myFleet, $position);
+            [$isHit, $ship] = GameController::checkIsHit(self::$myFleet, $position);
             self::$console->println();
             printf("Computer shoot in %s%s", $position->getColumn(), $position->getRow());
             if ($isHit && $ship->isSunk()) {
