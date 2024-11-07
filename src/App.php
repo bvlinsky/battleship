@@ -11,7 +11,7 @@ class App
     private static $enemyFleet = [];
     private static $console;
 
-    static function run()
+    public static function run()
     {
         self::$console = new Console();
         self::$console->setForegroundColor(Color::MAGENTA);
@@ -235,7 +235,7 @@ class App
 
             self::$console->resetForegroundColor();
             self::printGameStepBoundary();
-//            exit();
+            //            exit();
         }
     }
 
@@ -244,7 +244,7 @@ class App
         $letter = substr($input, 0, 1);
         $number = substr($input, 1, 1);
 
-        if(!is_numeric($number)) {
+        if (!is_numeric($number)) {
             throw new Exception("Not a number: $number");
         }
 

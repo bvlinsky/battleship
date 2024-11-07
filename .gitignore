@@ -4,3 +4,4 @@ vendor/
 /.vs
 /testresults
 composer.lock
+.php-cs-fixer.cache
