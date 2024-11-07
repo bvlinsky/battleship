@@ -19,7 +19,7 @@ class Position
     public function __construct($letter, $number)
     {
         $this->column = Letter::validate(strtoupper($letter));
-        $this->row = $number;
+        $this->row = Number::validate($number);
     }
 
     public function getColumn()
