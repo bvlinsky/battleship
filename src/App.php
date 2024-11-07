@@ -170,6 +170,8 @@ __      _(_)_ __  _ __   ___ _ __  | |
   \_/\_/ |_|_| |_|_| |_|\___|_|    (_)
 TEXT;
                     self::$console->println($text);
+                    self::$console->resetForegroundColor();
+                    readline("Press ENTER");
                     exit();
                 }
             } elseif ($isHit) {
@@ -233,6 +235,8 @@ __   __               _           _     _
   |_|\___/ \__,_|    |_|\___/|___/\__| (_)
 TEXT;
                     self::$console->println($text);
+                    self::$console->resetForegroundColor();
+                    readline("Press ENTER");
                     exit();
                 }
             } elseif ($isHit) {
