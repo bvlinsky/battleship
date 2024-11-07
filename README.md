@@ -12,61 +12,20 @@ options:
 
 ## Run locally
 
-Run battleship with composer
+Install Docker: https://docs.docker.com/engine/install/
+
+Run battleship in Docker:
 
 ```bash
-composer run game
+docker build -t battleship .
+docker run -it -v ${PWD}:/battleship -w /battleship battleship composer run game
 ```
 
 ## Execute tests with composer
 
-Install dependencies
 ```bash
+docker build -t battleship .
+docker run -it -v ${PWD}:/battleship -w /battleship battleship bash
 composer update
-```
-
-Run tests
-```bash
 composer run test
-```
-
-## Docker
-
-If you don't want to install anything php-related on your system, you can
-run the game inside Docker instead.
-
-### Build a Docker Container from the Image selected in dockerfile
-
-```bash
-docker build -t my_image ./
-```
-### Run a Docker Container from the Image
-
-```bash
-docker run -it -v ${PWD}:/battleship -w /battleship my_image bash
-```
-
-# Launching the game
-
-```bash
-composer run game
-```
-
-# Running the Tests
-
-Don't forget to install dependencies ;)
-```bash
-composer update
-```
-
-Run tests:
-```
-composer run test
-```
-
-### Troubleshooting 
-
-1. On my ubuntu virtual server on DO I needed to install:
-```bash
-apt-get install composer php7.2-mbstring php7.2-dom
 ```
