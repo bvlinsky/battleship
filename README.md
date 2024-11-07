@@ -35,10 +35,15 @@ composer run test
 If you don't want to install anything php-related on your system, you can
 run the game inside Docker instead.
 
+### Build a Docker Container from the Image selected in dockerfile
+
+```bash
+docker build -t my_image ./
+```
 ### Run a Docker Container from the Image
 
 ```bash
-docker run -it -v ${PWD}:/battleship -w /battleship composer bash
+docker run -it -v ${PWD}:/battleship -w /battleship my_image bash
 ```
 
 # Launching the game
