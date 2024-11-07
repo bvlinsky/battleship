@@ -218,17 +218,20 @@ class App
             } elseif ($isHit) {
                 self::beep();
 
-                self::$console->setForegroundColor(Color::ORANGE);
+                self::$console->setForegroundColor(Color::RED);
 
-                self::$console->println("                \\         .  ./");
-                self::$console->println("              \\      .:\" \";'.:..\" \"   /");
-                self::$console->println("                  (M^^.^~~:.'\" \").");
-                self::$console->println("            -   (/  .    . . \\ \\)  -");
-                self::$console->println("               ((| :. ~ ^  :. .|))");
-                self::$console->println("            -   (\\- |  \\ /  |  /)  -");
-                self::$console->println("                 -\\  \\     /  /-");
-                self::$console->println("                   \\  \\   /  /");
                 self::$console->println("  HIT YOUR SHIP!  ");
+                self::$console->println("     _.-^^---....,,--");
+                self::$console->println(" _--                  --_");
+                self::$console->println("<                        >)");
+                self::$console->println("|                         |");
+                self::$console->println(" \\._                   _./");
+                self::$console->println("    ```--. . , ; .--'''");
+                self::$console->println("          | |   |");
+                self::$console->println("       .-=||  | |=-.");
+                self::$console->println("       `-=#$%&%$#=-'");
+                self::$console->println("          | ;  :|");
+                self::$console->println(" _____.,-#%&$@%#&#~,._____");
 
             } else {
                 self::$console->setForegroundColor(Color::CADET_BLUE);
