@@ -157,7 +157,19 @@ class App
                         array_map(function ($ship) { return $ship->getName(); }, $ships),
                     ));
                 } else {
-                    self::$console->println("You are the winner!");
+                    self::$console->setForegroundColor(Color::GREEN);
+                    $text = <<<TEXT
+__   __                                   _   _
+\ \ / /__  _   _       __ _ _ __ ___     | |_| |__   ___
+ \ V / _ \| | | |     / _` | '__/ _ \    | __| '_ \ / _ \
+  | | (_) | |_| |    | (_| | | |  __/    | |_| | | |  __/
+  |_|\___/_\__,_|     \__,_|_|  \___|     \__|_| |_|\___|
+__      _(_)_ __  _ __   ___ _ __  | |
+\ \ /\ / / | '_ \| '_ \ / _ \ '__| | |
+ \ V  V /| | | | | | | |  __/ |    |_|
+  \_/\_/ |_|_| |_|_| |_|\___|_|    (_)
+TEXT;
+                    self::$console->println($text);
                     exit();
                 }
             } elseif ($isHit) {
@@ -209,7 +221,15 @@ class App
                         array_map(function ($ship) { return $ship->getName(); }, $ships),
                     ));
                 } else {
-                    self::$console->println("You lost!");
+                    self::$console->setForegroundColor(Color::RED);
+                    $text = <<<TEXT
+__   __               _           _     _
+\ \ / /__  _   _     | | ___  ___| |_  | |
+ \ V / _ \| | | |    | |/ _ \/ __| __| | |
+  | | (_) | |_| |    | | (_) \__ \ |_  |_|
+  |_|\___/ \__,_|    |_|\___/|___/\__| (_)
+TEXT;
+                    self::$console->println($text);
                     exit();
                 }
             } elseif ($isHit) {
