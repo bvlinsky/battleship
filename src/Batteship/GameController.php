@@ -29,6 +29,12 @@ class GameController
         return [false, null];
     }
 
+    public static function randomizeShipPosition($ship)
+    {
+        $letter = array_rand(array_slice(Letter::$letters, 0, 8-$ship->getSize()));
+        $digit = rand(1, 8-count(Letter::$letters));
+    }
+
     public static function getShipsLeft(array $fleet)
     {
         return array_filter($fleet, function ($ship) {

@@ -40,6 +40,16 @@ class App
 
     public static function InitializeEnemyFleet()
     {
+        $shipsToPlace = GameController::initializeShips();
+
+        foreach ($shipsToPlace as $ship) {
+            do {
+                GameController::randomizeShipPosition($ship);
+            } while ($ship->isPositionValid(self::$enemyFleet));
+
+            self::$enemyFleet[] = $ship;
+        }
+
         self::$enemyFleet = GameController::initializeShips();
 
         array_push(self::$enemyFleet[0]->getPositions(), new Position('B', 4));
