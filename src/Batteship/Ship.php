@@ -4,7 +4,6 @@ namespace Battleship;
 
 class Ship
 {
-
     private $name;
     private $size;
     private $color;

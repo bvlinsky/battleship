@@ -6,7 +6,6 @@ use InvalidArgumentException;
 
 class GameController
 {
-
     public static function checkIsHit(array $fleet, $shot)
     {
         if ($fleet == null) {
@@ -39,7 +38,7 @@ class GameController
 
     public static function initializeShips()
     {
-        return Array(
+        return array(
             new Ship("Aircraft Carrier", 5, Color::CADET_BLUE),
             new Ship("Battleship", 4, Color::RED),
             new Ship("Submarine", 3, Color::CHARTREUSE),
