@@ -136,7 +136,7 @@ class App
 
                 self::$console->setForegroundColor(Color::ORANGE);
 
-                self::$console->println("You sank a {$ship->getName()}!");
+                self::$console->println("You just sank a {$ship->getName()}!");
                 self::$console->println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
                 self::$console->println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣄⠈⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
                 self::$console->println("⠀⠀⠀⣴⣄⠀⢀⣤⣶⣦⣀⠀⠀⣰⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
@@ -189,7 +189,7 @@ class App
             if ($isHit && $ship->isSunk()) {
                 $ships = GameController::getShipsLeft(self::$enemyFleet);
                 self::beep();
-                self::$console->println("Computer sank a {$ship->getName()}!");
+                self::$console->println("Computer just sank a {$ship->getName()}!");
                 self::$console->println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
                 self::$console->println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣄⠈⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
                 self::$console->println("⠀⠀⠀⣴⣄⠀⢀⣤⣶⣦⣀⠀⠀⣰⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
@@ -251,7 +251,7 @@ class App
         return new Position($letter, $number);
     }
 
-    public static function printGameStepBoundary($txt = "\n\n\n ================================================= \n\n\n")
+    public static function printGameStepBoundary($txt = "\n\n\n=================================================\n\n\n")
     {
         self::$console->println($txt);
     }
