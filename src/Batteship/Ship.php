@@ -74,7 +74,7 @@ class Ship
         $myPos = array_map(fn ($p) string => (string) $p, $this->positions);
 
         foreach ($fleet as $ship) {
-            $pos = array_map(fn ($p) string => (string) $p, $ship->getPositions());
+            $pos = array_map(fn ($p): string => (string) $p, $ship->getPositions());
             if (count(array_intersect($myPos, $pos))) {
                 return false;
             }

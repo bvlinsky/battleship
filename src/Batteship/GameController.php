@@ -31,8 +31,29 @@ class GameController
 
     public static function randomizeShipPosition($ship)
     {
-        $letter = array_rand(array_slice(Letter::$letters, 0, 8-$ship->getSize()));
-        $digit = rand(1, 8-count(Letter::$letters));
+        $horizontal = (bool)rand(0, 1);
+
+        $size = count(Letter:$letters);
+
+        if ($horizontal) {
+            // losujemy punkt, od którego będziemy rysować statek w lewo
+            $letter_index = rand($ship->getSize(), 8); // indeksowane od jedynki
+            $digit = rand(1, 8);
+
+            for ($i = $letter_index-$ship->getSize(); $i <= $letter_index; $i++) {
+                $letter = Letter:$letters[$i];
+                $ship->addPosition($letter . $digit);
+            }
+        } else {
+            // losujemy punkt, od którego będizemy rosować statek w górę
+            $letter_index = rand(1, 8); // indeksowane od jedynki
+            $digit = rand($ship->getSize(), 8);
+
+            $letter = Letter:$letters[$letter_index-1];
+            for ($i = $digit-$ship->getSize(); $i <= $letter_index; $i++) {
+                $ship->addPosition($letter . $digit);
+            }
+        }
     }
 
     public static function getShipsLeft(array $fleet)

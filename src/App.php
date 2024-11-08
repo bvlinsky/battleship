@@ -47,6 +47,8 @@ class App
                 GameController::randomizeShipPosition($ship);
             } while ($ship->isPositionValid(self::$enemyFleet));
 
+            print_r($ship->getPosition());
+
             self::$enemyFleet[] = $ship;
         }
 
