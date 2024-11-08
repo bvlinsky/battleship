@@ -40,7 +40,7 @@ class GameController
             $letter_index = rand($ship->getSize(), 8); // indeksowane od jedynki
             $digit = rand(1, 8);
 
-            for ($i = $letter_index-$ship->getSize(); $i < $letter_index; $i++) {
+            for ($i = $letter_index - $ship->getSize(); $i < $letter_index; $i++) {
                 $letter = Letter::$letters[$i];
                 $ship->addPosition($letter . $digit);
             }
@@ -49,9 +49,9 @@ class GameController
             $letter_index = rand(1, 8); // indeksowane od jedynki
             $digit = rand($ship->getSize(), 8);
 
-            $letter = Letter::$letters[$letter_index-1];
-            for ($i = $digit-$ship->getSize(); $i < $digit; $i++) {
-                $ship->addPosition($letter . ($i+1));
+            $letter = Letter::$letters[$letter_index - 1];
+            for ($i = $digit - $ship->getSize(); $i < $digit; $i++) {
+                $ship->addPosition($letter . ($i + 1));
             }
         }
     }
