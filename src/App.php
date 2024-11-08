@@ -41,6 +41,19 @@ class App
 
     public static function InitializeEnemyFleet()
     {
+        $shipsToPlace = GameController::initializeShips();
+        foreach ($shipsToPlace as $ship) {
+            do {
+                $shipTest = clone $ship;
+                GameController::randomizeShipPosition($shipTest);
+            } while (!$shipTest->isPositionValid(self::$enemyFleet));
+
+            self::$enemyFleet[] = $shipTest;
+        }
+        if (getenv("DEBUG")) {
+            Field::render(8, 8, self::$enemyFleet, self::$console);
+        }
+
         self::$enemyFleet = GameController::initializeShips();
 
         array_push(self::$enemyFleet[0]->getPositions(), new Position('B', 4));
@@ -109,8 +122,8 @@ class App
 
     public static function InitializeGame()
     {
-        self::InitializeMyFleet();
         self::InitializeEnemyFleet();
+        self::InitializeMyFleet();
     }
 
     public static function StartGame()
