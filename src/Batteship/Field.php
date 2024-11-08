@@ -32,9 +32,9 @@ class Field
                     $console->setForegroundColor($ships[$letter . $row]->getColor());
                     $console->print('[ ]');
                 } else {
-                    $console->resetForegroundColor();
                     $console->print('~~~');
                 }
+                $console->resetForegroundColor();
             }
 
             $console->println();
