@@ -33,15 +33,15 @@ class GameController
     {
         $horizontal = (bool)rand(0, 1);
 
-        $size = count(Letter:$letters);
+        $size = count(Letter::$letters);
 
         if ($horizontal) {
             // losujemy punkt, od którego będziemy rysować statek w lewo
             $letter_index = rand($ship->getSize(), 8); // indeksowane od jedynki
             $digit = rand(1, 8);
 
-            for ($i = $letter_index-$ship->getSize(); $i <= $letter_index; $i++) {
-                $letter = Letter:$letters[$i];
+            for ($i = $letter_index-$ship->getSize(); $i < $letter_index; $i++) {
+                $letter = Letter::$letters[$i];
                 $ship->addPosition($letter . $digit);
             }
         } else {
@@ -49,9 +49,9 @@ class GameController
             $letter_index = rand(1, 8); // indeksowane od jedynki
             $digit = rand($ship->getSize(), 8);
 
-            $letter = Letter:$letters[$letter_index-1];
-            for ($i = $digit-$ship->getSize(); $i <= $letter_index; $i++) {
-                $ship->addPosition($letter . $digit);
+            $letter = Letter::$letters[$letter_index-1];
+            for ($i = $digit-$ship->getSize(); $i < $digit; $i++) {
+                $ship->addPosition($letter . $i);
             }
         }
     }
