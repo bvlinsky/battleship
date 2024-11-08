@@ -4,6 +4,7 @@ use Battleship\GameController;
 use Battleship\Position;
 use Battleship\Letter;
 use Battleship\Color;
+use Battleship\Field;
 
 class App
 {
@@ -98,6 +99,10 @@ class App
             printf("Please enter the positions for the %s (size: %s)", $ship->getName(), $ship->getSize());
 
             for ($i = 1; $i <= $ship->getSize(); $i++) {
+                self::$console->println();
+                Field::render(8, 8, self::$myFleet, self::$console);
+                self::$console->println();
+
                 printf("\nEnter position %s of %s (i.e A3):", $i, $ship->getSize());
                 $input = readline("");
                 $ship->addPosition($input);

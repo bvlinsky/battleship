@@ -18,4 +18,9 @@ class Console
     {
         echo "$line\n";
     }
+
+    public function print($line = "")
+    {
+        echo $line;
+    }
 }
