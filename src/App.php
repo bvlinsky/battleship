@@ -43,12 +43,15 @@ class App
     {
         $shipsToPlace = GameController::initializeShips();
         foreach ($shipsToPlace as $ship) {
-            $shipTest = clone $ship;
             do {
+                $shipTest = clone $ship;
                 GameController::randomizeShipPosition($shipTest);
             } while (!$shipTest->isPositionValid(self::$enemyFleet));
 
             self::$enemyFleet[] = $shipTest;
+        }
+        if (getenv("DEBUG")) {
+            Field::render(8, 8, self::$enemyFleet, self::$console);
         }
 
         self::$enemyFleet = GameController::initializeShips();

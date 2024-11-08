@@ -51,7 +51,7 @@ class GameController
 
             $letter = Letter::$letters[$letter_index-1];
             for ($i = $digit-$ship->getSize(); $i < $digit; $i++) {
-                $ship->addPosition($letter . $i);
+                $ship->addPosition($letter . ($i+1));
             }
         }
     }

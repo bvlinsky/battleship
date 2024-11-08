@@ -71,7 +71,6 @@ class Ship
 
     public function isPositionValid(array $fleet)
     {
-        return true;
         $myPos = array_map(fn ($p): string => (string) $p, $this->positions);
 
         foreach ($fleet as $ship) {
